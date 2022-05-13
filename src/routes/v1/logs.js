@@ -13,6 +13,8 @@ router.get('/', async (req, res) => {
     const [data] = await connection.execute(`
     SELECT * FROM logs
     `)
+    await connection.end()
+
     return res.send(data)
   } catch (err) {
     return res.status(500).send({ err: 'Server issue...' })
@@ -34,13 +36,13 @@ router.get(
       ON ${mysql.escape(req.params.id)} = pet_id
       WHERE pets.id = ${mysql.escape(req.params.id)}
       `)
-      // console.log(data)
+      await connection.end()
 
       if (data.length < 1) {
         await connection.end()
         return res.send({ err: 'No logs found.' })
       }
-      await connection.end()
+
       return res.status(200).send(data)
     } catch (err) {
       return res.status(500).send({ err: 'Server issue...' })
@@ -62,10 +64,10 @@ router.post(
         req.body.description
       )}, ${mysql.escape(req.body.status)} )
     `)
-
       await connection.end()
 
       if (!data.insertId || data.affectedRows !== 1) {
+        await connection.end()
         return res.status(500).send({ err: 'Server issue...' })
       }
 

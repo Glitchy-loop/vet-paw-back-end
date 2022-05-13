@@ -25,8 +25,6 @@ router.post(
       })
       const data = await response.json()
 
-      // console.log(data)
-
       const response2 = await fetch(`${strapiServer}/api/medications`, {
         method: 'POST',
         headers: {
@@ -42,8 +40,6 @@ router.post(
         })
       })
       const data2 = await response2.json()
-
-      // console.log(data2)
 
       return res.status(200).send(data2)
     } catch (err) {

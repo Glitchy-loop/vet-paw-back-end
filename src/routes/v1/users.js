@@ -28,6 +28,7 @@ router.get('/', async (req, res) => {
     const [data] = await connection.execute(`
     SELECT * FROM users
     `)
+    await connection.end()
     res.send(data)
   } catch (err) {
     return res.status(500).send({ err: 'Server issue...' })
@@ -49,7 +50,7 @@ router.post('/register', validation(registrationSchema), async (req, res) => {
     await connection.end()
 
     if (!data.insertId || data.affectedRows !== 1) {
-      console.log(data)
+      await connection.end()
       return res.status(500).send({ err: 'Server issue...' })
     }
 
@@ -76,15 +77,16 @@ router.post('/login', validation(loginSchema), async (req, res) => {
     await connection.end()
 
     if (data.length === 0) {
+      await connection.end()
       return res.status(400).send({ msg: 'User not found.' })
     }
 
     if (!bcrypt.compareSync(req.body.password, data[0].password)) {
+      await connection.end()
       return res.status(400).send({ msg: 'Incorrect password.' })
     }
 
     const token = jsonwebtoken.sign({ accountId: data[0].id }, jwtSecret)
-
     res.status(200).send({ msg: 'User successfully logged in', token, data })
   } catch (err) {
     console.log(err)
@@ -105,7 +107,7 @@ router.post(
     WHERE email = ${mysql.escape(req.body.email)}
     LIMIT 1
     `)
-
+      await connection.end()
       const checkHash = bcrypt.compareSync(req.body.oldpass, data[0].password)
 
       if (!checkHash) {
@@ -114,13 +116,11 @@ router.post(
       }
 
       const newHashPassword = bcrypt.hashSync(req.body.newpass, 10)
-
       connection.execute(`
     UPDATE users 
     SET password = ${mysql.escape(newHashPassword)}
     WHERE email = ${mysql.escape(req.body.email)}
     `)
-
       await connection.end()
 
       return res.status(200).send({ msg: 'Successfully changed password.' })
@@ -140,7 +140,6 @@ router.post('/resetpass', validation(resetPassSchema), async (req, res) => {
     })
 
     const hashedPass = bcrypt.hashSync(password, 10)
-
     const connection = await mysql.createConnection(mysqlConfig)
     const [data] = await connection.execute(`
     UPDATE users
@@ -150,6 +149,7 @@ router.post('/resetpass', validation(resetPassSchema), async (req, res) => {
     await connection.end()
 
     if (data.affectedRows !== 1) {
+      await connection.end()
       return res.status(500).send({ err: 'Server issue...' })
     }
 

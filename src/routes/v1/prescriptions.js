@@ -9,21 +9,6 @@ const isLoggedIn = require('../../middleware/auth')
 const validation = require('../../middleware/validation')
 const router = express.Router()
 
-// Create table
-// router.get('/table', async (req, res) => {
-//   const connection = await mysql.createConnection(mysqlConfig)
-//   const data = await connection.execute(`
-//   CREATE TABLE prescriptions (
-//   id INT AUTO_INCREMENT PRIMARY KEY,
-//   medication_id INT NOT NULL,
-//   pet_id INT NOT NULL,
-//   comment varchar(255) NOT NULL,
-//   timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-//   )
-//   `)
-//   return res.send(data)
-// })
-
 // Get all logs
 router.get('/', async (req, res) => {
   try {
@@ -52,13 +37,13 @@ router.get(
       ON ${mysql.escape(req.params.id)} = pet_id
       WHERE pets.id = ${mysql.escape(req.params.id)}
       `)
-      // console.log(data)
+      await connection.end()
 
       if (data.length < 1) {
         await connection.end()
         return res.send({ err: 'No logs found.' })
       }
-      await connection.end()
+
       return res.status(200).send(data)
     } catch (err) {
       return res.status(500).send({ err: 'Server issue...' })
@@ -80,7 +65,6 @@ router.post(
         req.body.pet_id
       )}, ${mysql.escape(req.body.comment)} )
     `)
-
       await connection.end()
 
       if (!data.insertId || data.affectedRows !== 1) {
