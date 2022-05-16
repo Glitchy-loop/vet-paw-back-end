@@ -4,7 +4,7 @@
   <h1>Vet-Paw application back-end</h1>
   
   <p>
-    An awesome README template for your projects! 
+    This is a back-end part of the Vet-Paw application.
   </p>
   
 <br />
