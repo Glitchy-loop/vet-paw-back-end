@@ -2,8 +2,8 @@ const express = require('express')
 const mysql = require('mysql2/promise')
 const { mysqlConfig } = require('../../config')
 const {
-  addPrescriptionSchema,
-  prescriptionsByIdSchema
+  addPrescriptionSchema
+  // prescriptionsByIdSchema
 } = require('../../middleware/prescriptionSchema')
 const isLoggedIn = require('../../middleware/auth')
 const validation = require('../../middleware/validation')
@@ -24,33 +24,33 @@ router.get('/', async (req, res) => {
 })
 
 // Get prescriptions by pet ID
-router.get(
-  '/prescription/:id',
-  isLoggedIn,
-  validation(prescriptionsByIdSchema),
-  async (req, res) => {
-    try {
-      const connection = await mysql.createConnection(mysqlConfig)
-      const [data] = await connection.execute(`
-      SELECT *
-      FROM pets
-      INNER JOIN prescriptions
-      ON ${mysql.escape(req.params.id)} = pet_id
-      WHERE pets.id = ${mysql.escape(req.params.id)}
-      `)
-      await connection.end()
+// router.get(
+//   '/prescription/:id',
+//   isLoggedIn,
+//   validation(prescriptionsByIdSchema),
+//   async (req, res) => {
+//     try {
+//       const connection = await mysql.createConnection(mysqlConfig)
+//       const [data] = await connection.execute(`
+//       SELECT *
+//       FROM pets
+//       INNER JOIN prescriptions
+//       ON ${mysql.escape(req.params.id)} = pet_id
+//       WHERE pets.id = ${mysql.escape(req.params.id)}
+//       `)
+//       await connection.end()
 
-      if (data.length < 1) {
-        await connection.end()
-        return res.send({ err: 'No logs found.' })
-      }
+//       if (data.length < 1) {
+//         await connection.end()
+//         return res.send({ err: 'No logs found.' })
+//       }
 
-      return res.status(200).send(data)
-    } catch (err) {
-      return res.status(500).send({ err: 'Server issue...' })
-    }
-  }
-)
+//       return res.status(200).send(data)
+//     } catch (err) {
+//       return res.status(500).send({ err: 'Server issue...' })
+//     }
+//   }
+// )
 
 // Add prescription
 router.post(
