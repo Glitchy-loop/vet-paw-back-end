@@ -7,17 +7,6 @@
     An awesome README template for your projects! 
   </p>
   
-  <h4>
-    <a href="https://github.com/Louis3797/awesome-readme-template/">View Demo</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template">Documentation</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Report Bug</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Request Feature</a>
-  </h4>
-</div>
-
 <br />
 
 <!-- Table of Contents -->
@@ -48,15 +37,6 @@
 
 <!-- About the Project -->
 ## :star2: About the Project
-
-
-<!-- Screenshots -->
-### :camera: Screenshots
-
-<div align="center"> 
-  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
-</div>
-
 
 <!-- TechStack -->
 ### :space_invader: Tech Stack
@@ -96,21 +76,13 @@
   </ul>
 </details>
 
-<details>
-<summary>DevOps</summary>
-  <ul>
-    <li><a href="https://www.docker.com/">Docker</a></li>
-    <li><a href="https://www.jenkins.io/">Jenkins</a></li>
-    <li><a href="https://circleci.com/">CircleCLI</a></li>
-  </ul>
-</details>
 
 <!-- Features -->
 ### :dart: Features
 
-- Feature 1
-- Feature 2
-- Feature 3
+- User authentication - registration, login, forget password, reset password.
+- Add remove pets from the database through front-end.
+- Search query by pet's name.
 
 <!-- Color Reference -->
 ### :art: Color Reference
