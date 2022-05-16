@@ -9,13 +9,14 @@ const isLoggedIn = require('../../middleware/auth')
 const validation = require('../../middleware/validation')
 const router = express.Router()
 
-// Get all logs
+// Get all prescriptions
 router.get('/', async (req, res) => {
   try {
     const connection = await mysql.createConnection(mysqlConfig)
     const [data] = await connection.execute(`
     SELECT * FROM prescriptions
     `)
+    await connection.end()
     return res.send(data)
   } catch (err) {
     return res.status(500).send({ err: 'Server issue...' })
@@ -51,7 +52,7 @@ router.get(
   }
 )
 
-// Add log
+// Add prescription
 router.post(
   '/add_prescription',
   isLoggedIn,
