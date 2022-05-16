@@ -2,7 +2,10 @@ const express = require('express')
 const mysql = require('mysql2/promise')
 const { mysqlConfig } = require('../../config')
 const isLoggedIn = require('../../middleware/auth')
-const { logByIdSchema, addLogSchema } = require('../../middleware/logSchema')
+const {
+  logByIdSchema,
+  addLogSchema
+} = require('../../middleware/schemas/logSchema')
 const validation = require('../../middleware/validation')
 const router = express.Router()
 

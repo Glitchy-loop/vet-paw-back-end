@@ -4,7 +4,7 @@ const { mysqlConfig } = require('../../config')
 const {
   addPrescriptionSchema
   // prescriptionsByIdSchema
-} = require('../../middleware/prescriptionSchema')
+} = require('../../middleware/schemas/prescriptionSchema')
 const isLoggedIn = require('../../middleware/auth')
 const validation = require('../../middleware/validation')
 const router = express.Router()

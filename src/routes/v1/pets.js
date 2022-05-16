@@ -3,7 +3,10 @@ const mysql = require('mysql2/promise')
 const { mysqlConfig } = require('../../config')
 const validation = require('../../middleware/validation')
 const router = express.Router()
-const { addPetSchema, deletePetSchema } = require('../../middleware/petSchemas')
+const {
+  addPetSchema,
+  deletePetSchema
+} = require('../../middleware/schemas/petSchemas')
 
 // Get all pets
 router.get('/', async (req, res) => {

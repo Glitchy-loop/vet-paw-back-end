@@ -1,7 +1,7 @@
 const express = require('express')
 const fetch = require('node-fetch')
 const isLoggedIn = require('../../middleware/auth')
-const { addMedSchema } = require('../../middleware/medicationSchema')
+const { addMedSchema } = require('../../middleware/schemas/medicationSchema')
 const validation = require('../../middleware/validation')
 const { strapiUser, strapiPass, strapiServer } = require('../../config')
 

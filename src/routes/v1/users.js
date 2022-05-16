@@ -15,7 +15,7 @@ const {
   loginSchema,
   changePassSchema,
   resetPassSchema
-} = require('../../middleware/userSchemas')
+} = require('../../middleware/schemas/userSchemas')
 const passGenerator = require('generate-password')
 const isLoggedIn = require('../../middleware/auth')
 
