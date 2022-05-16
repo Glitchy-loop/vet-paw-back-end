@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="assets/logo.png" alt="logo" width="200" height="auto" />
+  <img src="assets/images/logoCircled.png" alt="logo" width="200" height="auto" />
   <h1>Vet-Paw application back-end</h1>
   
   <p>
