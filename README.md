@@ -67,6 +67,7 @@ To run this project, you will need to add the following environment variables to
 
 `STRAPI_LOGIN=`
 `STRAPI_PASSWORD=`
+`STRAPI_SERVER=`
 
 <!-- Getting Started -->
 ## 	:toolbox: Getting Started
