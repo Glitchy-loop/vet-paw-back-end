@@ -7,6 +7,7 @@ const {
   addPetSchema,
   deletePetSchema
 } = require('../../middleware/schemas/petSchemas')
+const isLoggedIn = require('../../middleware/auth')
 
 // Get all pets
 router.get('/', async (req, res) => {
@@ -23,27 +24,32 @@ router.get('/', async (req, res) => {
 })
 
 // Add pet
-router.post('/add_pet', validation(addPetSchema), async (req, res) => {
-  try {
-    const connection = await mysql.createConnection(mysqlConfig)
-    const [data] = await connection.execute(`
+router.post(
+  '/add_pet',
+  isLoggedIn,
+  validation(addPetSchema),
+  async (req, res) => {
+    try {
+      const connection = await mysql.createConnection(mysqlConfig)
+      const [data] = await connection.execute(`
     INSERT INTO pets (name, age, clientEmail)
     VALUES (${mysql.escape(req.body.name)},${mysql.escape(
-      req.body.age
-    )}, ${mysql.escape(req.body.clientEmail)} )
+        req.body.age
+      )}, ${mysql.escape(req.body.clientEmail)} )
     `)
-    await connection.end()
-
-    if (!data.insertId || data.affectedRows !== 1) {
       await connection.end()
+
+      if (!data.insertId || data.affectedRows !== 1) {
+        await connection.end()
+        return res.status(500).send({ err: 'Server issue' })
+      }
+
+      return res.status(200).send({ msg: 'Successfully added a pet.' })
+    } catch (err) {
       return res.status(500).send({ err: 'Server issue...' })
     }
-
-    return res.status(200).send({ msg: 'Successfully added a pet.' })
-  } catch (err) {
-    return res.status(500).send({ err: 'Server issue...' })
   }
-})
+)
 
 // Delete pet
 router.delete('/delete_pet', validation(deletePetSchema), async (req, res) => {
