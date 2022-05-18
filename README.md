@@ -47,6 +47,7 @@ This a back-end part of a simple veterinary application. Register to the applica
 
 - User authentication - registration, login, forget password, reset password.
 - Add remove pets from the database through front-end.
+- Add prescriptions logs for the particular pet.
 - Search query by pet name.
 
 <!-- Env Variables -->
@@ -67,6 +68,7 @@ To run this project, you will need to add the following environment variables to
 
 `STRAPI_LOGIN=`
 `STRAPI_PASSWORD=`
+`STRAPI_SERVER=`
 
 <!-- Getting Started -->
 ## 	:toolbox: Getting Started
