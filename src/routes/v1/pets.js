@@ -105,6 +105,7 @@ router.get('/search/:searchQuery', async (req, res) => {
     const [data] = await connection.execute(`
     SELECT * FROM pets
     WHERE name LIKE '%${req.params.searchQuery}%'
+    AND archived LIKE 0
     `)
     connection.end()
 
