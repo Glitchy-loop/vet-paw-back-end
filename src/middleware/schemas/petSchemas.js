@@ -13,7 +13,8 @@ const addPetSchema = Joi.object({
     .integer()
     .min(0)
     .max(100)
-    .required()
+    .required(),
+  img: Joi.any()
 })
 
 const deletePetSchema = Joi.object({

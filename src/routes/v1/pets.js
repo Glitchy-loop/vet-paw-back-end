@@ -4,10 +4,19 @@ const { mysqlConfig } = require('../../config')
 const validation = require('../../middleware/validation')
 const router = express.Router()
 const {
-  addPetSchema,
+  // addPetSchema,
   deletePetSchema
 } = require('../../middleware/schemas/petSchemas')
 const isLoggedIn = require('../../middleware/auth')
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, './images'),
+  filename: (req, file, cb) => cb(null, `${new Date().getTime()}.jpg`)
+})
+const path = require('path')
+
+const upload = multer({ storage })
 
 // Get all pets
 router.get('/', async (req, res) => {
@@ -27,15 +36,16 @@ router.get('/', async (req, res) => {
 router.post(
   '/add_pet',
   isLoggedIn,
-  validation(addPetSchema),
+  // validation(addPetSchema), //! TODO
+  upload.single('img'),
   async (req, res) => {
     try {
       const connection = await mysql.createConnection(mysqlConfig)
       const [data] = await connection.execute(`
-    INSERT INTO pets (name, age, clientEmail)
+    INSERT INTO pets (name, age, clientEmail, img)
     VALUES (${mysql.escape(req.body.name)},${mysql.escape(
         req.body.age
-      )}, ${mysql.escape(req.body.clientEmail)} )
+      )}, ${mysql.escape(req.body.clientEmail)}, '${req.file.filename}' )
     `)
       await connection.end()
 
@@ -50,6 +60,17 @@ router.post(
     }
   }
 )
+// Get pet image by img id
+router.get('/img/:id', (req, res) => {
+  try {
+    let reqPath = path.join(__dirname, '../../../images')
+    const image = `${reqPath}/${req.params.id}`
+    console.log(image)
+    res.sendFile(image)
+  } catch (err) {
+    return res.status(500).send({ err: 'Server issue...' })
+  }
+})
 
 // Delete pet
 router.delete('/delete_pet', validation(deletePetSchema), async (req, res) => {
