@@ -8,6 +8,8 @@ This a back-end part of a simple veterinary application. Register to the applica
   </p>
   
 <br />
+  
+## 🖥️ Front-end repository https://github.com/Glitchy-loop/vet-paw-front-end
 
 <!-- About the Project -->
 ## :star2: About the Project
