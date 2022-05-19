@@ -74,11 +74,10 @@ router.post('/login', validation(loginSchema), async (req, res) => {
       WHERE email = ${mysql.escape(req.body.email)}
       LIMIT 1
       `)
-    await connection.end()
 
-    if (data.length === 0) {
+    if (data.length < 1) {
       await connection.end()
-      return res.status(400).send({ msg: 'User not found.' })
+      return res.status(400).send({ err: 'User not found.' })
     }
 
     if (!bcrypt.compareSync(req.body.password, data[0].password)) {
@@ -146,7 +145,6 @@ router.post('/resetpass', validation(resetPassSchema), async (req, res) => {
     SET password = ${mysql.escape(hashedPass)}
     WHERE email = ${mysql.escape(req.body.email)}
     `)
-    await connection.end()
 
     if (data.affectedRows !== 1) {
       await connection.end()
