@@ -4,7 +4,7 @@ const { mysqlConfig } = require('../../config')
 const validation = require('../../middleware/validation')
 const router = express.Router()
 const {
-  // addPetSchema,
+  addPetSchema,
   deletePetSchema
 } = require('../../middleware/schemas/petSchemas')
 const isLoggedIn = require('../../middleware/auth')
@@ -14,8 +14,8 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, './images'),
   filename: (req, file, cb) => cb(null, `${new Date().getTime()}.jpg`)
 })
-const path = require('path')
 
+const path = require('path')
 const upload = multer({ storage })
 
 // Get all pets
@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
 router.post(
   '/add_pet',
   isLoggedIn,
-  // validation(addPetSchema),
+  validation(addPetSchema),
   upload.single('img'),
   async (req, res) => {
     try {
@@ -60,6 +60,7 @@ router.post(
     }
   }
 )
+
 // Get pet image by img id
 router.get('/img/:id', (req, res) => {
   try {

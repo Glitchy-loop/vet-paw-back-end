@@ -1,19 +1,15 @@
 const Joi = require('joi')
 
 const addPetSchema = Joi.object({
-  name: Joi.string()
-    .trim()
-    .required(),
-  clientEmail: Joi.string()
-    .email()
-    .trim()
-    .lowercase()
-    .required(),
+  name: Joi.string().trim(),
   age: Joi.number()
     .integer()
     .min(0)
-    .max(100)
-    .required(),
+    .max(100),
+  clientEmail: Joi.string()
+    .email()
+    .trim()
+    .lowercase(),
   img: Joi.any()
 })
 

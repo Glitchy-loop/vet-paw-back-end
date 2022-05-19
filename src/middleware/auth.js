@@ -8,7 +8,7 @@ const isLoggedIn = (req, res, next) => {
     return next()
   } catch (err) {
     console.log(err)
-    return res.status(400).send({ err: 'User is not logged in' })
+    return res.status(400).send({ err: 'User is not logged in.' })
   }
 }
 
