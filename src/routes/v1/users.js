@@ -107,7 +107,7 @@ router.post(
     WHERE email = ${mysql.escape(req.body.email)}
     LIMIT 1
     `)
-      await connection.end()
+
       const checkHash = bcrypt.compareSync(req.body.oldpass, data[0].password)
 
       if (!checkHash) {

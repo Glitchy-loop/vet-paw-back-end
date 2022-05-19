@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
 router.post(
   '/add_pet',
   isLoggedIn,
-  // validation(addPetSchema), //! TODO
+  // validation(addPetSchema),
   upload.single('img'),
   async (req, res) => {
     try {
@@ -65,7 +65,6 @@ router.get('/img/:id', (req, res) => {
   try {
     let reqPath = path.join(__dirname, '../../../images')
     const image = `${reqPath}/${req.params.id}`
-    console.log(image)
     res.sendFile(image)
   } catch (err) {
     return res.status(500).send({ err: 'Server issue...' })
