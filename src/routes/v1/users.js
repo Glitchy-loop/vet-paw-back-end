@@ -39,8 +39,8 @@ router.get('/', async (req, res) => {
 router.post('/register', validation(registrationSchema), async (req, res) => {
   try {
     const hash = bcrypt.hashSync(req.body.password, 10)
-
     const connection = await mysql.createConnection(mysqlConfig)
+    console.log('connected')
     const [data] = await connection.execute(`
         INSERT INTO users (name, email, password)
         VALUES (${mysql.escape(req.body.name)}, ${mysql.escape(

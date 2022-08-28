@@ -11,7 +11,7 @@ const isLoggedIn = require('../../middleware/auth')
 const multer = require('multer')
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, './images'),
+  destination: (req, file, cb) => cb(null, './src/images'),
   filename: (req, file, cb) => cb(null, `${new Date().getTime()}.jpg`)
 })
 
@@ -64,7 +64,7 @@ router.post(
 // Get pet image by img id
 router.get('/img/:id', (req, res) => {
   try {
-    let reqPath = path.join(__dirname, '../../../images')
+    let reqPath = path.join(__dirname, '../../images')
     const image = `${reqPath}/${req.params.id}`
     res.sendFile(image)
   } catch (err) {
